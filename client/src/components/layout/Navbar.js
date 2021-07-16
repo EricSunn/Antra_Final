@@ -9,15 +9,15 @@ function Navbar() {
   return (
     <div>
       <Link to="/">Home</Link>
-      {loggedIn === false && (
+      {loggedIn === "none" && (
         <>
           <Link to="/register">Register</Link>
           <Link to="/login">Log in</Link>
         </>
       )}
-      {loggedIn === true && (
+      {loggedIn === "user" && (
         <>
-          <Link to="/customers">Customers</Link>
+          <Link to="/todos">Todos </Link>
           <LogOutBtn />
         </>
       )}

@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
   try {
-    const { email, password, passwordVerify } = req.body;
+    const { email, password, passwordVerify, permission } = req.body;
 
     // validation
 
@@ -32,16 +32,10 @@ router.post("/", async (req, res) => {
 
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
-    console.log(passwordHash);
 
     //Save a new user account to database
 
-    const newUser = new User({
-      email,
-      passwordHash,
-    });
-
-    const savedUser = await newUser.save();
+    const savedUser = await User.create({ email, passwordHash, permission });
 
     //Log the user in
 
@@ -51,7 +45,6 @@ router.post("/", async (req, res) => {
       },
       process.env.JWT_SECRET
     );
-    console.log(token);
 
     //send the token in a HTML cookie
 
@@ -59,12 +52,12 @@ router.post("/", async (req, res) => {
       .cookie("token", token, {
         httpOnly: true,
       })
+      .json(savedUser)
       .send();
   } catch (err) {
     console.error(err);
     res.status(500).send();
   }
-  res.send("test");
 });
 
 router.post("/login", async (req, res) => {
@@ -118,19 +111,19 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/loggedIn", (req, res) => {
+router.get("/loggedIn", async (req, res) => {
   try {
     const token = req.cookies.token;
 
-    if (!token) return res.send(false);
+    if (!token) return res.send("none");
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
 
-    req.user = verified.user;
+    const user = await User.findById(verified.user);
 
-    res.send(true);
+    res.send(user.permission);
   } catch (err) {
-    res.send(false);
+    res.send("none");
   }
 });
 

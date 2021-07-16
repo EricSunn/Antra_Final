@@ -15,7 +15,7 @@ function Register() {
     try {
       const registerDate = { email, password, passwordVerify };
 
-      const log = await axios.post("http://localhost:5000/auth", registerDate);
+      await axios.post("http://localhost:5000/auth", registerDate);
       getLoggedIn();
       //   const log = fetch("http://localhost:5000/auth", {
       //     method: "POST",
