@@ -12,8 +12,9 @@ function Todoform({ handlesubmit, button }) {
   }
   return (
     <div>
-      <form onSubmit={submit}>
+      <form className="col-md-12 " onSubmit={submit}>
         <input
+          className="todo-input col-md-8"
           type="text"
           placeholder="Enter todos:"
           value={todo}
@@ -21,7 +22,9 @@ function Todoform({ handlesubmit, button }) {
             await setTodo(e.target.value);
           }}
         />
-        <button type="submit">{button}</button>
+        <button className="todo-button col-md-4" type="submit">
+          {button}
+        </button>
       </form>
     </div>
   );

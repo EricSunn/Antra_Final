@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import axios from "axios";
 
@@ -12,9 +12,9 @@ function Login() {
   async function handlesubmit(e) {
     e.preventDefault();
     try {
-      const loginDate = { email, password };
+      const loginData = { email, password };
 
-      await axios.post("http://localhost:5000/auth/login", loginDate);
+      await axios.post("http://localhost:5000/auth/login", loginData);
       getLoggedIn();
       history.push("/");
     } catch (err) {
@@ -23,22 +23,32 @@ function Login() {
   }
 
   return (
-    <div>
+    <div className="formContainer">
       <h1>Log in to your account</h1>
-      <form onSubmit={handlesubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-        <button type="Log In">Register</button>
+      <form className="loginForm" onSubmit={handlesubmit}>
+        <div>
+          <h5 className=" col-sm-2 col-md-2">Email:</h5>
+          <input
+            className=" col-sm-2 col-md-2"
+            type="email"
+            placeholder="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+          />
+        </div>
+        <div>
+          <h5 className=" col-sm-2 col-md-2">Password:</h5>
+          <input
+            className=" col-sm-2 col-md-2"
+            type="password"
+            placeholder="Password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+          />
+        </div>
+        <div>
+          <button type="Log In">Log In</button>
+        </div>
       </form>
     </div>
   );

@@ -37,11 +37,6 @@ router.delete("/:id", auth, async (req, res) => {
     var id = req.params.id;
     await Customer.findByIdAndDelete(id);
     res.send(id);
-    // const { _id } = req.body;
-
-    // const result = await Customer.findByIdAndDelete(_id);
-
-    // res.send(_id);
   } catch (err) {
     console.error(err);
     res.status(500).send("delete fail");
@@ -49,17 +44,10 @@ router.delete("/:id", auth, async (req, res) => {
 });
 
 router.patch("/:id", auth, async (req, res) => {
-  console.log(req.body.name);
-  console.log(req.params.id);
   try {
     var id = req.params.id;
     await Customer.findByIdAndUpdate(id, req.body);
     res.send(id);
-    // const { _id } = req.body;
-
-    // const result = await Customer.findByIdAndDelete(_id);
-
-    // res.send(_id);
   } catch (err) {
     console.error(err);
     res.status(500).send("update fail");

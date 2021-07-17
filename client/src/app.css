@@ -1,0 +1,156 @@
+/* Navbar */
+.header {
+  height: 6rem;
+  width: 100%;
+  background-color: green;
+  position: fixed;
+}
+
+.nav_item {
+  display: inline-block;
+  height: 30px;
+}
+
+.nav_item * {
+  margin: auto 10px;
+}
+
+.nav_item a {
+  color: white;
+}
+
+.welcome {
+  display: inline-block;
+  color: yellow;
+}
+
+.title {
+  position: absolute;
+  top: 30px;
+  text-align: center;
+}
+
+/* Content  */
+body {
+  /* background-color: purple; */
+}
+
+.container-fluid {
+  padding-top: 120px;
+}
+
+.formContainer {
+  border: solid black 2px;
+  padding: 20px;
+}
+
+.formContainer > div {
+  display: block;
+}
+
+.formContainer > div > * {
+  display: inline-block;
+}
+
+/* login */
+
+.loginForm {
+}
+
+.loginForm > div {
+  margin: 20px;
+  display: block;
+}
+
+.loginForm > div > * {
+  display: inline-flex;
+}
+
+/* Todo  */
+.todo-input {
+  padding: 16px 32px 16px 16px;
+  border-radius: 4px 0 0 4px;
+  border: 2px solid #5d0cff;
+  outline: none;
+  background: transparent;
+  /* color: #fff; */
+}
+
+.todo-button {
+  padding: 18px;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  outline: none;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 118, 20, 1) 0%,
+    rgba(255, 84, 17, 1) 100%
+  );
+  color: #fff;
+  /* text-transform: capitalize; */
+}
+
+.todo-item {
+  height: 60px;
+  width: 100%;
+  text-align: left;
+  /* color: white; */
+  overflow: hidden;
+}
+
+.todo-item > * {
+  display: inline-block;
+}
+
+.todo-item > h3 {
+  padding: 10px 0px 0px 10px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  text-align: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.todo-item:nth-child(4n) {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 118, 20, 1) 0%,
+    rgba(255, 84, 17, 1) 100%
+  );
+}
+
+.todo-item:nth-child(4n + 1) {
+  background: linear-gradient(
+    90deg,
+    rgba(93, 12, 255, 1) 0%,
+    rgba(155, 0, 250, 1) 100%
+  );
+}
+
+.todo-item:nth-child(4n + 2) {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 12, 241, 1) 0%,
+    rgba(250, 0, 135, 1) 100%
+  );
+}
+
+.todo-item:nth-child(4n + 3) {
+  background: linear-gradient(
+    90deg,
+    rgba(20, 159, 255, 1) 0%,
+    rgba(17, 122, 255, 1) 100%
+  );
+}
+
+.delete-icon {
+  color: #fff;
+}
+
+.edit-icon {
+  color: #fff;
+}

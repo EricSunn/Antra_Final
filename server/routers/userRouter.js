@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/userModel");
+const Customer = require("../models/customerModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -115,15 +116,15 @@ router.get("/loggedIn", async (req, res) => {
   try {
     const token = req.cookies.token;
 
-    if (!token) return res.send("none");
+    if (!token) return res.send({ permission: "none", name: "none" });
 
     const verified = jwt.verify(token, process.env.JWT_SECRET);
 
     const user = await User.findById(verified.user);
 
-    res.send(user.permission);
+    res.send({ permission: user.permission, name: user.email });
   } catch (err) {
-    res.send("none");
+    res.send({ permission: "none", name: "none" });
   }
 });
 
@@ -134,6 +135,41 @@ router.get("/logout", (req, res) => {
       expires: new Date(0),
     })
     .send();
+});
+
+router.get("/manage", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.send("none");
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(verified.user);
+
+    if (user.permission === "admin") {
+      const data = await User.find({ permission: "user" });
+      res.json(data);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send();
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const token = req.cookies.token;
+    if (!token) return res.send("none");
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(verified.user);
+
+    if (user.permission === "admin") {
+      await Customer.deleteMany({ author: req.params.id });
+      const data = await User.findByIdAndDelete(req.params.id);
+      res.json(data);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("delete fail");
+  }
 });
 
 module.exports = router;

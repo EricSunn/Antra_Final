@@ -50,15 +50,16 @@ function Todo() {
   }, []);
 
   return (
-    <div>
+    <div className="todo formContainer">
       {isedit && (
         <>
-          <div>
-            <h3>previous todo:</h3>
-            <p>{edittodo.name}</p>
-            <button onClick={(e) => setIsedit(false)}>Back</button>
-            <Todoform handlesubmit={updateTodo} button="Update" />
+          <div className="todo-item">
+            <h3 className="col-md-10">Previous todo:{edittodo.name}</h3>
+            <button className="col-md-1" onClick={(e) => setIsedit(false)}>
+              Back
+            </button>
           </div>
+          <Todoform handlesubmit={updateTodo} button="Update" />
         </>
       )}
       {!isedit && (
