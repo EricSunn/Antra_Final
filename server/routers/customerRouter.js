@@ -24,7 +24,12 @@ router.post("/", auth, async (req, res) => {
 
 router.get("/", auth, async (req, res) => {
   try {
-    const customers = await Customer.find();
+    const token = req.cookies.token;
+    if (!token) return res.status(401).send("UnAuthrized");
+    const verify = jwt.verify(token, process.env.JWT_SECRET);
+    const author = verify.user;
+
+    const customers = await Customer.find({ author: author });
     res.json(customers);
   } catch (err) {
     console.error(err);

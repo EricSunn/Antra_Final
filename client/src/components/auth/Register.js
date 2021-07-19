@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import AuthContext from "../../context/AuthContext";
+import Store from "../Redux/Store";
 
 function Register() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [passwordVerify, setPasswordVerify] = React.useState("");
-  const { getLoggedIn } = useContext(AuthContext);
   const history = useHistory();
 
   async function handlesubmit(e) {
@@ -21,7 +20,11 @@ function Register() {
       };
 
       await axios.post("http://localhost:5000/auth", registerDate);
-      getLoggedIn();
+      const loggedInRes = await axios
+        .get("http://localhost:5000/auth/loggedIn")
+        .then((data) => data.data);
+      Store.dispatch({ type: "log", payload: loggedInRes });
+      Store.dispatch({ type: "title", payload: "Note System" });
       history.push("/");
     } catch (err) {
       console.error(err);

@@ -1,47 +1,82 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../../context/AuthContext";
 import LogOutBtn from "../auth/LogOutBtn";
+import Store from "../Redux/Store";
 
 function Navbar() {
-  const { loggedIn, userName } = useContext(AuthContext);
+  const [update, forceupdate] = useState(0);
+  Store.subscribe(() => {
+    forceupdate(update + 1);
+  });
+
   return (
     <div className="header">
       <div className="nav_item text-start col-sm-6 col-md-6">
-        <Link to="/">Home</Link>
-        {loggedIn === "user" && (
+        <Link
+          to="/"
+          onClick={(e) => {
+            Store.dispatch({ type: "title", payload: "Note System" });
+          }}
+        >
+          Home
+        </Link>
+        {Store.getState().role === "user" && (
           <>
-            <Link to="/todos">Todos </Link>
+            <Link
+              to="/todos"
+              onClick={(e) => {
+                Store.dispatch({ type: "title", payload: "Todos" });
+              }}
+            >
+              Todos{" "}
+            </Link>
           </>
         )}
-        {loggedIn === "admin" && (
+        {Store.getState().role === "admin" && (
           <>
-            <Link to="/manage">manage </Link>
+            <Link
+              to="/manage"
+              onClick={(e) => {
+                Store.dispatch({ type: "title", payload: "Manage User" });
+              }}
+            >
+              manage{" "}
+            </Link>
           </>
         )}
       </div>
       <div className="nav_item text-end col-sm-6 col-md-6">
-        {loggedIn === "none" && (
+        {Store.getState().role === "none" && (
           <>
-            <Link to="/register" userName={userName}>
+            <Link
+              to="/register"
+              onClick={(e) => {
+                Store.dispatch({ type: "title", payload: "Sign up" });
+              }}
+            >
               Register
             </Link>
-            <Link to="/login" userName={userName}>
+            <Link
+              to="/login"
+              onClick={(e) => {
+                Store.dispatch({ type: "title", payload: "Sign in" });
+              }}
+            >
               Log in
             </Link>
           </>
         )}
-        {loggedIn !== "none" && (
+        {Store.getState().role !== "none" && (
           <>
             <div className="welcome col-sm-6 col-md-6">
-              <span>Hi,{userName}</span>
+              <span>Hi,{Store.getState().user}</span>
             </div>
             <LogOutBtn />
           </>
         )}
       </div>
       <div className="title col-sm-12">
-        <h1>Note System</h1>
+        <h1>{Store.getState().title}</h1>
       </div>
     </div>
   );

@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Provider } from "react-redux";
 import Todoform from "./Todoform";
 import Todolist from "./Todolist";
 
@@ -54,7 +53,7 @@ function Todo() {
       {isedit && (
         <>
           <div className="todo-item">
-            <h3 className="col-md-10">Previous todo:{edittodo.name}</h3>
+            <h3 className="col-md-10">Previous todo:&emsp;{edittodo.name}</h3>
             <button className="col-md-1" onClick={(e) => setIsedit(false)}>
               Back
             </button>

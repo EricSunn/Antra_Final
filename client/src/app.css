@@ -12,6 +12,8 @@
 }
 
 .nav_item * {
+  font-size: 24px;
+
   margin: auto 10px;
 }
 
@@ -96,7 +98,6 @@ body {
   width: 100%;
   text-align: left;
   /* color: white; */
-  overflow: hidden;
 }
 
 .todo-item > * {
@@ -104,15 +105,17 @@ body {
 }
 
 .todo-item > h3 {
-  padding: 10px 0px 0px 10px;
+  margin-top: 10px;
+  overflow: scroll;
 }
 
 .icons {
-  display: flex;
-  align-items: center;
+  display: inline-block;
   text-align: right;
   font-size: 24px;
   cursor: pointer;
+  top: -15px;
+  position: relative;
 }
 
 .todo-item:nth-child(4n) {
@@ -149,8 +152,14 @@ body {
 
 .delete-icon {
   color: #fff;
+  margin-right: 5px;
 }
 
 .edit-icon {
   color: #fff;
+}
+
+/* Home */
+.card {
+  z-index: -1;
 }

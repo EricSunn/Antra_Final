@@ -30,10 +30,12 @@ function Manage() {
         return (
           <div className="todo-item" key={index}>
             <h3 className="col-md-9 offset-md-1">{user.email}</h3>
-            <AiFillDelete
-              onClick={() => removeUser(user._id)}
-              className="delete-icon col-md-1"
-            />
+            <div className="icons  col-md-1">
+              <AiFillDelete
+                onClick={() => removeUser(user._id)}
+                className="delete-icon "
+              />
+            </div>
           </div>
         );
       })}

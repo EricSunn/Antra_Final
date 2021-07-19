@@ -1,15 +1,18 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
-import AuthContext from "../../context/AuthContext";
 import axios from "axios";
+import Store from "../Redux/Store";
 
 function LogOutBtn() {
-  const { getLoggedIn } = useContext(AuthContext);
   const history = useHistory();
   async function logOut() {
     await axios.get("http://localhost:5000/auth/logout");
-    await getLoggedIn();
+    const loggedInRes = await axios
+      .get("http://localhost:5000/auth/loggedIn")
+      .then((data) => data.data);
+    Store.dispatch({ type: "log", payload: loggedInRes });
     history.push("/");
+    Store.dispatch({ type: "title", payload: "Note System" });
   }
 
   return <button onClick={logOut}>Log out</button>;
